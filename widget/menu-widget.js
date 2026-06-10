@@ -4,7 +4,7 @@
 // 2) En el iPhone: pega este codigo en un script nuevo de Scriptable.
 // 3) Agrega un widget de Scriptable a la pantalla de inicio y eligelo.
 
-const RAW_URL = "https://raw.githubusercontent.com/TU_USUARIO/menu-los-patos/main/data/menu.json";
+const RAW_URL = "https://raw.githubusercontent.com/Pacortes2021/menu-los-patos/main/data/menu.json";
 
 const AZUL = new Color("#173961");
 const CELESTE = new Color("#85B7EB");

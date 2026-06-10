@@ -63,7 +63,7 @@ python build.py          # genera ../data/menu.json
 1. Instala **Scriptable** desde la App Store (gratis).
 2. Abre `widget/menu-widget.js`, copia su contenido en un script nuevo.
 3. Cambia `RAW_URL` por la URL de tu `menu.json`:
-   `https://raw.githubusercontent.com/TU_USUARIO/menu-los-patos/main/data/menu.json`
+   `https://raw.githubusercontent.com/Pacortes2021/menu-los-patos/main/data/menu.json`
 4. Mantén presionada la pantalla de inicio → **+** → Scriptable → widget mediano →
    en "Script" elige este. iOS lo refresca solo cada cierto rato.
 
