@@ -1,0 +1,47 @@
+name: Menu diario Los Patos
+
+on:
+  schedule:
+    # GitHub usa hora UTC. Chile esta en UTC-4 (mayo-ago) o UTC-3 (sep-abr).
+    # 12:00 UTC = 08:00 Chile (invierno) / 09:00 Chile (verano).
+    - cron: "0 12 * * 1-5"
+  workflow_dispatch: {}   # permite ejecutarlo a mano desde la pestana Actions
+
+permissions:
+  contents: write
+
+jobs:
+  menu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Scrapear y construir menu.json
+        working-directory: scraper
+        run: python build.py
+
+      - name: Guardar cambios en menu.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/menu.json
+          if git diff --staged --quiet; then
+            echo "Sin cambios en el menu."
+          else
+            git commit -m "menu: actualizar $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+      - name: Enviar menu de hoy por WhatsApp
+        working-directory: scraper
+        env:
+          CALLMEBOT_PHONE: ${{ secrets.CALLMEBOT_PHONE }}
+          CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
+        run: python notify_whatsapp.py
