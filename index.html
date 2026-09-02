@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Portal Académico — ICI UdeC</title>
+  
+  <!-- Configuración PWA / iOS Web App -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Portal ICI">
+  <meta name="theme-color" content="#185FA5">
+  <link rel="apple-touch-icon" href="https://img.icons8.com/fluency/192/graduation-cap.png">
+  <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/96/graduation-cap.png">
+
+  <!-- Manifest PWA embebido -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Portal%20Acad%C3%A9mico%20ICI%20UdeC%22%2C%22short_name%22%3A%22Portal%20ICI%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f7f6%22%2C%22theme_color%22%3A%22%23185FA5%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fimg.icons8.com%2Ffluency%2F192%2Fgraduation-cap.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f7f9;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #185FA5;
+      --primary-dark: #0f447a;
+      --primary-light: #e0edfa;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 10px 25px rgba(24, 95, 165, 0.08);
+      
+      /* Ramos Colors */
+      --c-log: #1565c0;
+      --c-emp: #2e7d32;
+      --c-dir: #d32f2f;
+      --c-amb: #8e24aa;
+      --c-plan: #f39c12;
+      --c-genai: #00838f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+    }
+    .topbar-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0 4px 10px rgba(24, 95, 165, 0.25);
+    }
+    .brand-text h1 { font-size: 18px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.3px; }
+    .brand-text p { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .nav-desktop {
+      display: flex;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 4px;
+      border-radius: 10px;
+    }
+    .nav-btn {
+      border: none;
+      background: transparent;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .nav-btn.active {
+      background: #fff;
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .nav-btn:hover:not(.active) { color: var(--text); }
+
+    .btn-action {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 10px rgba(24, 95, 165, 0.2);
+    }
+    .btn-action:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+    /* ── MOBILE BOTTOM NAV ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid var(--border);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+      z-index: 1000;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    }
+    .mobile-nav-list {
+      display: flex;
+      justify-content: space-around;
+      list-style: none;
+    }
+    .mobile-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+    .mobile-nav-item i { font-size: 18px; }
+    .mobile-nav-item.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* ── MAIN CONTAINER ── */
+    .container {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── CARDS & GRIDS ── */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-title i { color: var(--primary); }
+
+    /* ── SECCIÓN HORARIO ── */
+    .horario-layout {
+      display: grid;
+      grid-template-columns: 2.3fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .horario-toggle {
+      display: none;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .horario-toggle-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .horario-toggle-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Vista Móvil: Timeline del Día */
+    .day-selector {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .day-pill {
+      flex: 1;
+      min-width: 58px;
+      padding: 10px 6px;
+      text-align: center;
+      background: #f8fafc;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .day-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(24, 95, 165, 0.25);
+    }
+    .day-pill .name { font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    .day-pill .date { font-size: 13px; font-weight: 800; margin-top: 2px; }
+
+    .timeline-list { display: flex; flex-direction: column; gap: 12px; }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 6px solid;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .timeline-time {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 60px;
+      text-align: center;
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .timeline-info h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .timeline-info .sala {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Tabla Grilla Desktop */
+    .table-container { overflow-x: auto; }
+    table.horario-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      min-width: 650px;
+    }
+    table.horario-table th, table.horario-table td {
+      border: 1px solid var(--border);
+      text-align: center;
+      vertical-align: middle;
+      height: 52px;
+    }
+    table.horario-table th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 10px;
+    }
+    .hora-col {
+      background: #f8fafc;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 9%;
+    }
+    .ramo {
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 8px 6px;
+      line-height: 1.35;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .ramo:hover { filter: brightness(1.15); transform: scale(1.02); }
+    .ramo .sala-code {
+      display: block;
+      font-size: 8.5px;
+      font-weight: 600;
+      opacity: 0.95;
+      margin-top: 4px;
+      background: rgba(0,0,0,0.18);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+    .vacio { background: transparent; border: 1px dashed #e2e8f0; }
+
+    .c-log   { background: var(--c-log); }
+    .c-emp   { background: var(--c-emp); }
+    .c-dir   { background: var(--c-dir); }
+    .c-amb   { background: var(--c-amb); }
+    .c-plan  { background: var(--c-plan); }
+    .c-genai { background: var(--c-genai); }
+
+    /* ── SECCIÓN MENÚ LOS PATOS ── */
+    .menu-highlight {
+      background: linear-gradient(135deg, #173961, #0f2540);
+      color: #fff;
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(23, 57, 97, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-highlight::after {
+      content: "🦆";
+      position: absolute;
+      right: 15px;
+      bottom: -10px;
+      font-size: 120px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .menu-today-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .menu-title-date { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
+    
+    .menu-items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .menu-dish-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .dish-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #85B7EB;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dish-name { font-size: 14px; font-weight: 700; line-height: 1.4; }
+
+    .menu-month-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .month-day-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .month-day-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+    .month-day-card.is-today { border: 2px solid var(--primary); background: #f0f7ff; }
+    .m-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; font-weight: 700; color: var(--primary-dark); }
+    .m-dish { font-size: 12px; margin-bottom: 5px; color: var(--text); display: flex; gap: 6px; }
+
+    /* ── SECCIÓN EVALUACIONES Y CALENDARIO ── */
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .cal-mes { font-size: 15px; font-weight: 800; color: var(--text); }
+    .cal-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .cal-btn:hover { background: var(--primary-light); color: var(--primary); }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+    .cal-head { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .cal-day {
+      position: relative;
+      height: 38px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cal-day.empty { background: transparent; pointer-events: none; }
+    .cal-day.today { border: 2px solid var(--primary); font-weight: 800; }
+    .cal-day.has-event { background: var(--primary-light); color: var(--primary); font-weight: 800; }
+    .cal-dots { position: absolute; bottom: 3px; display: flex; gap: 2px; }
+    .cal-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+    /* Lista Evaluaciones */
+    .eval-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 6px solid;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      transition: transform 0.15s;
+    }
+    .eval-card:hover { transform: translateX(2px); }
+    .eval-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .eval-ramo { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .eval-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #f1f5f9;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .btn-del {
+      background: none;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 8px;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+    .btn-del:hover { opacity: 1; }
+
+    /* ── MODALES ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 26px;
+      width: 440px;
+      max-width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+      animation: popUp 0.2s ease;
+    }
+    @keyframes popUp { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(24, 95, 165, 0.15); }
+
+    /* ── RESPONSIVE MEDIA QUERIES ── */
+    @media (max-width: 900px) {
+      body { padding-bottom: 100px; }
+      .nav-desktop { display: none; }
+      .mobile-nav { display: block; }
+      .horario-layout { grid-template-columns: 1fr; }
+      .horario-toggle { display: flex; }
+      .view-grid-table { display: none; }
+      .view-grid-table.show-on-mobile { display: block; }
+      .view-timeline { display: block; }
+      .view-timeline.hide-on-mobile { display: none; }
+      .container { padding: 0 14px; margin-top: 14px; }
+      .brand-text h1 { font-size: 16px; }
+      .btn-action span { display: none; }
+      .btn-action { padding: 10px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar Header -->
+  <header class="topbar">
+    <div class="topbar-content">
+      <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-text">
+          <h1>Portal Académico</h1>
+          <p>Ingeniería Civil Industrial · UdeC</p>
+        </div>
+      </div>
+
+      <nav class="nav-desktop">
+        <button class="nav-btn active" onclick="cambiarTab('horario', this)"><i class="fa-solid fa-calendar-week"></i> Horario</button>
+        <button class="nav-btn" onclick="cambiarTab('menu', this)"><i class="fa-solid fa-utensils"></i> Menú Los Patos</button>
+        <button class="nav-btn" onclick="cambiarTab('agenda', this)"><i class="fa-regular fa-calendar-check"></i> Evaluaciones</button>
+      </nav>
+
+      <button class="btn-action" onclick="abrirModalEval()">
+        <i class="fa-solid fa-plus"></i> <span>Nueva Evaluación</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main App Container -->
+  <main class="container">
+
+    <!-- ══════ TAB 1: HORARIO DE CLASES ══════ -->
+    <section id="tab-horario" class="tab-content active">
+      <div class="horario-layout">
+        <div class="col-main">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-table-cells"></i> Horario de Clases</div>
+              <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;">Semestre Actual</span>
+            </div>
+
+            <!-- Toggle de vista móvil -->
+            <div class="horario-toggle">
+              <button class="horario-toggle-btn active" onclick="toggleVistaHorario('timeline', this)"><i class="fa-solid fa-list-ul"></i> Clases de Hoy</button>
+              <button class="horario-toggle-btn" onclick="toggleVistaHorario('grid', this)"><i class="fa-solid fa-table"></i> Grilla Semanal</button>
+            </div>
+
+            <!-- Vista Móvil: Timeline del día -->
+            <div id="vista-timeline" class="view-timeline">
+              <div class="day-selector" id="day-selector">
+                <div class="day-pill" onclick="seleccionarDia(1, this)"><div class="name">Lun</div><div class="date">L</div></div>
+                <div class="day-pill" onclick="seleccionarDia(2, this)"><div class="name">Mar</div><div class="date">M</div></div>
+                <div class="day-pill" onclick="seleccionarDia(3, this)"><div class="name">Mié</div><div class="date">X</div></div>
+                <div class="day-pill" onclick="seleccionarDia(4, this)"><div class="name">Jue</div><div class="date">J</div></div>
+                <div class="day-pill" onclick="seleccionarDia(5, this)"><div class="name">Vie</div><div class="date">V</div></div>
+              </div>
+              <div id="timeline-contenedor" class="timeline-list"></div>
+            </div>
+
+            <!-- Vista Grilla Desktop -->
+            <div id="vista-grid" class="view-grid-table table-container">
+              <table class="horario-table">
+                <thead>
+                  <tr>
+                    <th class="hora-col">Bloque</th>
+                    <th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="hora-col">1 (8:15)</td>
+                    <td class="vacio"></td><td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-emp" onclick="filtrarRamo('emprendimiento')">
+                      TALLER DE<br>EMPRENDIMIENTO (T)<span class="sala-code">[Teaching]</span>
+                    </td>
+                    <td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-dir" onclick="filtrarRamo('direccion')">
+                      DIRECCIÓN Y CONTROL<br>DE PROYECTOS (P)<span class="sala-code">[TM 3-9]</span>
+                    </td>
+                  </tr>
+                  <tr><td class="hora-col">2 (9:15)</td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr>
+                    <td class="hora-col">3 (10:15)</td>
+                    <td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-amb" onclick="filtrarRamo('ambiental')">
+                      GESTIÓN AMBIENTAL (T)<span class="sala-code">[IS 2-3]</span>
+                    </td>
+                    <td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-genai" onclick="filtrarRamo('genai')">
+                      GENERATIVE ARTIFICIAL<br>INTELLIGENCE (T)<span class="sala-code">[TM 3-7]</span>
+                    </td>
+                    <td rowspan="2" class="ramo c-log" onclick="filtrarRamo('logistica')">
+                      LOGÍSTICA (P)<span class="sala-code">[Diseño Mec]</span>
+                    </td>
+                  </tr>
+                  <tr><td class="hora-col">4 (11:15)</td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr>
+                    <td class="hora-col">5 (12:15)</td>
+                    <td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-plan" onclick="filtrarRamo('planificacion')">
+                      PLANIFICACIÓN Y CONTROL<br>DE PROD. (P)<span class="sala-code">[TM 3-10]</span>
+                    </td>
+                    <td class="vacio"></td><td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-genai" onclick="filtrarRamo('genai')">
+                      GENERATIVE ARTIFICIAL<br>INTELLIGENCE (P)<span class="sala-code">[TM 3-11]</span>
+                    </td>
+                  </tr>
+                  <tr><td class="hora-col">6 (13:15)</td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr><td class="hora-col">7 (14:15)</td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr>
+                    <td class="hora-col">8 (15:15)</td>
+                    <td rowspan="2" class="ramo c-log" onclick="filtrarRamo('logistica')">
+                      LOGÍSTICA (T)<span class="sala-code">[A-9]</span>
+                    </td>
+                    <td rowspan="2" class="ramo c-log" onclick="filtrarRamo('logistica')">
+                      LOGÍSTICA (P)<span class="sala-code">[Diseño Mec]</span>
+                    </td>
+                    <td rowspan="2" class="ramo c-dir" onclick="filtrarRamo('direccion')">
+                      DIRECCIÓN Y CONTROL<br>DE PROYECTOS (T)<span class="sala-code">[A-6]</span>
+                    </td>
+                    <td class="vacio"></td><td class="vacio"></td>
+                  </tr>
+                  <tr><td class="hora-col">9 (16:00)</td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr>
+                    <td class="hora-col">10 (17:15)</td>
+                    <td class="vacio"></td><td class="vacio"></td><td class="vacio"></td>
+                    <td rowspan="2" class="ramo c-emp" onclick="filtrarRamo('emprendimiento')">
+                      TALLER DE<br>EMPRENDIMIENTO (P)<span class="sala-code">[Teaching]</span>
+                    </td>
+                    <td class="vacio"></td>
+                  </tr>
+                  <tr><td class="hora-col">11 (18:15)</td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td></tr>
+                  <tr><td class="hora-col">12 (19:15)</td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td><td class="vacio"></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna lateral: Widget resumen del día y menú rápido -->
+        <div class="col-side">
+          <div class="card" style="background: linear-gradient(135deg, #173961, #0f2540); color:#fff;">
+            <div style="font-size:11px;font-weight:700;color:#85B7EB;text-transform:uppercase;margin-bottom:6px;">🦆 Casino Los Patos Hoy</div>
+            <div id="quick-menu-title" style="font-size:15px;font-weight:800;margin-bottom:12px;">Cargando menú…</div>
+            <div id="quick-menu-content" style="font-size:12px;opacity:0.9;line-height:1.5;"></div>
+            <button onclick="cambiarTab('menu', document.querySelectorAll('.nav-btn')[1])" style="margin-top:14px;background:rgba(255,255,255,0.15);color:#fff;border:none;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;width:100%;">Ver mes completo →</button>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-regular fa-bell"></i> Próximas Entregas</div>
+            </div>
+            <div id="quick-evals-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════ TAB 2: MENÚ CASINO LOS PATOS ══════ -->
+    <section id="tab-menu" class="tab-content">
+      <!-- Menú Destacado Hoy -->
+      <div class="menu-highlight">
+        <div class="menu-today-badge"><i class="fa-solid fa-sparkles"></i> Menú de Hoy</div>
+        <h2 id="menu-dia-titulo" class="menu-title-date">Casino Los Patos</h2>
+        <div id="menu-dia-items" class="menu-items-grid">
+          <div class="menu-dish-card"><div class="dish-tag">Cargando datos…</div></div>
+        </div>
+      </div>
+
+      <!-- Calendario / Lista del Mes Completo -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><i class="fa-solid fa-calendar-days"></i> Minuta del Mes (Régimen Común)</div>
+          <button class="cal-btn" onclick="recargarMenu(true)" title="Refrescar"><i class="fa-solid fa-arrows-rotate"></i></button>
+        </div>
+        <div id="menu-mes-lista" class="menu-month-list"></div>
+      </div>
+    </section>
+
+    <!-- ══════ TAB 3: AGENDA Y EVALUACIONES ══════ -->
+    <section id="tab-agenda" class="tab-content">
+      <div class="horario-layout">
+        <div class="col-main">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="fa-solid fa-list-check"></i> Todas las Evaluaciones y Tareas</div>
+              <div style="display:flex;gap:8px;">
+                <button class="cal-btn" onclick="exportarDatos()" title="Exportar Respaldo"><i class="fa-solid fa-download"></i></button>
+                <button class="cal-btn" onclick="importarDatos()" title="Importar Respaldo"><i class="fa-solid fa-upload"></i></button>
+              </div>
+            </div>
+            <div id="agenda-lista-completa"></div>
+          </div>
+        </div>
+
+        <div class="col-side">
+          <div class="card">
+            <div class="cal-header">
+              <button class="cal-btn" onclick="cambiarMes(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+              <div id="cal-titulo" class="cal-mes"></div>
+              <button class="cal-btn" onclick="cambiarMes(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="cal-grid" style="margin-bottom:8px">
+              <div class="cal-head">Lu</div><div class="cal-head">Ma</div><div class="cal-head">Mi</div>
+              <div class="cal-head">Ju</div><div class="cal-head">Vi</div><div class="cal-head">Sa</div><div class="cal-head">Do</div>
+            </div>
+            <div id="cal-dias" class="cal-grid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="mobile-nav">
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item active" onclick="cambiarTab('horario', this)">
+        <i class="fa-solid fa-calendar-week"></i>
+        <span>Horario</span>
+      </li>
+      <li class="mobile-nav-item" onclick="cambiarTab('menu', this)">
+        <i class="fa-solid fa-utensils"></i>
+        <span>Casino</span>
+      </li>
+      <li class="mobile-nav-item" onclick="cambiarTab('agenda', this)">
+        <i class="fa-regular fa-calendar-check"></i>
+        <span>Agenda</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Modal Nueva Evaluación -->
+  <div id="modalEval" class="modal-overlay" onclick="cerrarSiFuera(event, 'modalEval')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="cerrarModal('modalEval')">×</button>
+      <h3 style="font-size:16px;font-weight:800;margin-bottom:16px;color:var(--primary-dark);"><i class="fa-solid fa-file-pen"></i> Nueva Evaluación</h3>
+      <form onsubmit="guardarEval(event)">
+        <div class="form-group">
+          <label>Asignatura</label>
+          <select id="ev-ramo" class="form-control" required>
+            <option value="" disabled selected>Seleccione el ramo...</option>
+            <option value="logistica">Logística</option>
+            <option value="emprendimiento">Taller de Emprendimiento</option>
+            <option value="direccion">Dirección y Control de Proyectos</option>
+            <option value="ambiental">Gestión Ambiental</option>
+            <option value="planificacion">Planificación y Control de Prod.</option>
+            <option value="genai">Generative Artificial Intelligence</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Título / Tipo de Evaluación</label>
+          <input type="text" id="ev-nombre" class="form-control" placeholder="Ej: Certamen 1, Entrega Tarea 2" required autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="ev-fecha" class="form-control" required>
+        </div>
+        <button type="submit" class="btn-action" style="width:100%;justify-content:center;padding:12px;">Guardar Evaluación</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ── BASE DE DATOS DE ASIGNATURAS Y HORARIO ── */
+    const RAMOS = {
+      'logistica': { nombre: 'Logística', color: '#1565c0', icon: 'truck-fast' },
+      'emprendimiento': { nombre: 'Taller de Emprendimiento', color: '#2e7d32', icon: 'lightbulb' },
+      'direccion': { nombre: 'Dirección y Control de Proyectos', color: '#d32f2f', icon: 'list-check' },
+      'ambiental': { nombre: 'Gestión Ambiental', color: '#8e24aa', icon: 'leaf' },
+      'planificacion': { nombre: 'Planificación y Control de Prod.', color: '#f39c12', icon: 'industry' },
+      'genai': { nombre: 'Generative Artificial Intelligence', color: '#00838f', icon: 'brain' }
+    };
+
+    const HORARIO_SEMANAL = {
+      1: [ // Lunes
+        { ramo: 'logistica', tipo: 'Teoría', sala: 'A-9', bloque: '8 - 9', hora: '15:15 - 17:00' }
+      ],
+      2: [ // Martes
+        { ramo: 'ambiental', tipo: 'Teoría', sala: 'IS 2-3', bloque: '3 - 4', hora: '10:15 - 12:00' },
+        { ramo: 'planificacion', tipo: 'Práctica', sala: 'TM 3-10', bloque: '5 - 6', hora: '12:15 - 14:00' },
+        { ramo: 'logistica', tipo: 'Práctica', sala: 'Diseño Mec', bloque: '8 - 9', hora: '15:15 - 17:00' }
+      ],
+      3: [ // Miércoles
+        { ramo: 'emprendimiento', tipo: 'Teoría', sala: 'Teaching', bloque: '1 - 2', hora: '08:15 - 10:00' },
+        { ramo: 'direccion', tipo: 'Teoría', sala: 'A-6', bloque: '8 - 9', hora: '15:15 - 17:00' }
+      ],
+      4: [ // Jueves
+        { ramo: 'genai', tipo: 'Teoría', sala: 'TM 3-7', bloque: '3 - 4', hora: '10:15 - 12:00' },
+        { ramo: 'emprendimiento', tipo: 'Práctica', sala: 'Teaching', bloque: '10 - 11', hora: '17:15 - 19:00' }
+      ],
+      5: [ // Viernes
+        { ramo: 'direccion', tipo: 'Práctica', sala: 'TM 3-9', bloque: '1 - 2', hora: '08:15 - 10:00' },
+        { ramo: 'logistica', tipo: 'Práctica', sala: 'Diseño Mec', bloque: '3 - 4', hora: '10:15 - 12:00' },
+        { ramo: 'genai', tipo: 'Práctica', sala: 'TM 3-11', bloque: '5 - 6', hora: '12:15 - 14:00' }
+      ]
+    };
+
+    const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+    // Evaluaciones precargadas por defecto
+    const EVALUACIONES_BASE = [
+      { id: '1', idRamo: 'planificacion', nombre: 'Certamen 1', fechaISO: '2026-10-02' },
+      { id: '2', idRamo: 'planificacion', nombre: 'Publicación tarea', fechaISO: '2026-10-05' },
+      { id: '3', idRamo: 'planificacion', nombre: 'Entrega tarea', fechaISO: '2026-11-02' },
+      { id: '4', idRamo: 'planificacion', nombre: 'Certamen 2', fechaISO: '2026-12-04' }
+    ];
+
+    let evaluaciones = JSON.parse(localStorage.getItem('portal_evaluaciones')) || EVALUACIONES_BASE;
+
+    /* ── NAVEGACIÓN ENTRE PESTAÑAS ── */
+    function cambiarTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+
+      document.querySelectorAll('.nav-btn, .mobile-nav-item').forEach(el => el.classList.remove('active'));
+      
+      // Activar correspondientes
+      document.querySelectorAll(`.nav-btn[onclick*="${tabId}"], .mobile-nav-item[onclick*="${tabId}"]`).forEach(el => el.classList.add('active'));
+
+      if (tabId === 'menu') cargarMenuCasino();
+    }
+
+    /* ── TIMELINE DE CLASES (MÓVIL) ── */
+    let diaSeleccionado = new Date().getDay();
+    if (diaSeleccionado === 0 || diaSeleccionado === 6) diaSeleccionado = 1; // Lunes por defecto en fds
+
+    function seleccionarDia(diaNum, pillEl) {
+      diaSeleccionado = diaNum;
+      document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+      if (pillEl) pillEl.classList.add('active');
+      renderTimeline();
+    }
+
+    function renderTimeline() {
+      const contenedor = document.getElementById('timeline-contenedor');
+      const clases = HORARIO_SEMANAL[diaSeleccionado] || [];
+
+      if (clases.length === 0) {
+        contenedor.innerHTML = `<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;"><i class="fa-solid fa-mug-hot" style="font-size:24px;margin-bottom:8px;display:block;"></i> No tienes clases programadas este día.</div>`;
+        return;
+      }
+
+      contenedor.innerHTML = clases.map(c => {
+        const info = RAMOS[c.ramo];
+        return `
+          <div class="timeline-item" style="border-left-color: ${info.color}">
+            <div class="timeline-time">
+              <span>Bloque ${c.bloque}</span>
+              <span style="font-size:9.5px;margin-top:2px;">${c.hora}</span>
+            </div>
+            <div class="timeline-info">
+              <h4 style="color:${info.color}">${info.nombre} (${c.tipo[0]})</h4>
+              <span class="sala"><i class="fa-solid fa-location-dot"></i> Sala ${c.sala}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleVistaHorario(vista, btn) {
+      document.querySelectorAll('.horario-toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const timeline = document.getElementById('vista-timeline');
+      const grid = document.getElementById('vista-grid');
+      if (vista === 'grid') {
+        timeline.classList.add('hide-on-mobile');
+        grid.classList.add('show-on-mobile');
+      } else {
+        timeline.classList.remove('hide-on-mobile');
+        grid.classList.remove('show-on-mobile');
+      }
+    }
+
+    /* ── MENÚ CASINO LOS PATOS ── */
+    let menuCache = null;
+
+    async function cargarMenuCasino(force = false) {
+      if (menuCache && !force) {
+        renderizarMenu(menuCache);
+        return;
+      }
+
+      // Intentar cargar localmente o desde GitHub Raw
+      const urls = [
+        './data/menu.json',
+        'https://raw.githubusercontent.com/Pacortes2021/menu-los-patos/main/data/menu.json?t=' + Date.now()
+      ];
+
+      for (let url of urls) {
+        try {
+          const resp = await fetch(url);
+          if (resp.ok) {
+            menuCache = await resp.json();
+            renderizarMenu(menuCache);
+            return;
+          }
+        } catch (e) {
+          console.warn("Fallo cargando menú desde " + url, e);
+        }
+      }
+
+      document.getElementById('menu-dia-titulo').innerText = "Casino Los Patos (Sin datos)";
+      document.getElementById('menu-dia-items').innerHTML = `<div class="menu-dish-card"><div class="dish-tag">Aviso</div><div class="dish-name">Aún no se han cargado los menús de este mes.</div></div>`;
+    }
+
+    function renderizarMenu(data) {
+      const hoyISO = new Date().toISOString().split('T')[0];
+      const dias = data.dias || [];
+      const menuHoy = dias.find(d => d.fecha === hoyISO) || dias[0];
+
+      // Render Destacado
+      if (menuHoy) {
+        const partes = menuHoy.fecha.split('-');
+        document.getElementById('menu-dia-titulo').innerText = `${menuHoy.dia_semana.toUpperCase()} ${partes[2]}/${partes[1]}`;
+        
+        let dishesHTML = '';
+        if (menuHoy.ensalada) {
+          dishesHTML += `<div class="menu-dish-card"><div class="dish-tag"><i class="fa-solid fa-leaf"></i> Sopa / Ensalada</div><div class="dish-name">${menuHoy.ensalada}</div></div>`;
+        }
+        if (menuHoy.alternativa_1) {
+          dishesHTML += `<div class="menu-dish-card"><div class="dish-tag"><i class="fa-solid fa-utensils"></i> Alternativa 1</div><div class="dish-name">${menuHoy.alternativa_1}</div></div>`;
+        }
+        if (menuHoy.alternativa_2) {
+          dishesHTML += `<div class="menu-dish-card"><div class="dish-tag"><i class="fa-solid fa-utensils"></i> Alternativa 2</div><div class="dish-name">${menuHoy.alternativa_2}</div></div>`;
+        }
+        if (menuHoy.postres && menuHoy.postres.length) {
+          dishesHTML += `<div class="menu-dish-card"><div class="dish-tag"><i class="fa-solid fa-cake-candles"></i> Postres</div><div class="dish-name">${menuHoy.postres.join(' · ')}</div></div>`;
+        }
+        document.getElementById('menu-dia-items').innerHTML = dishesHTML;
+
+        // Widget Rápido en pestaña horario
+        document.getElementById('quick-menu-title').innerText = `${menuHoy.dia_semana.toUpperCase()} ${partes[2]}/${partes[1]}`;
+        document.getElementById('quick-menu-content').innerHTML = `
+          <div><strong>1️⃣</strong> ${menuHoy.alternativa_1 || '—'}</div>
+          <div style="margin-top:4px;"><strong>2️⃣</strong> ${menuHoy.alternativa_2 || '—'}</div>
+        `;
+      }
+
+      // Render Lista Mes Completo
+      const listaContenedor = document.getElementById('menu-mes-lista');
+      if (dias.length === 0) {
+        listaContenedor.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:var(--muted);">No hay menú disponible para este mes todavía.</div>`;
+        return;
+      }
+
+      listaContenedor.innerHTML = dias.map(d => {
+        const p = d.fecha.split('-');
+        const isToday = d.fecha === hoyISO;
+        return `
+          <div class="month-day-card ${isToday ? 'is-today' : ''}">
+            <div class="m-header">
+              <span>${d.dia_semana.toUpperCase()} ${p[2]}/${p[1]}</span>
+              ${isToday ? '<span style="color:var(--primary);font-size:10px;background:var(--primary-light);padding:2px 8px;border-radius:10px;">HOY</span>' : ''}
+            </div>
+            ${d.ensalada ? `<div class="m-dish"><span>🥗</span> <span>${d.ensalada}</span></div>` : ''}
+            ${d.alternativa_1 ? `<div class="m-dish"><span>1️⃣</span> <span>${d.alternativa_1}</span></div>` : ''}
+            ${d.alternativa_2 ? `<div class="m-dish"><span>2️⃣</span> <span>${d.alternativa_2}</span></div>` : ''}
+            ${d.postres && d.postres.length ? `<div class="m-dish" style="color:var(--muted);font-size:11px;"><span>🍰</span> <span>${d.postres.join(' · ')}</span></div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function recargarMenu(force) {
+      cargarMenuCasino(force);
+    }
+
+    /* ── EVALUACIONES & AGENDA ── */
+    function guardarEval(e) {
+      e.preventDefault();
+      const idRamo = document.getElementById('ev-ramo').value;
+      const nombre = document.getElementById('ev-nombre').value;
+      const fechaISO = document.getElementById('ev-fecha').value;
+
+      const nueva = { id: Date.now().toString(), idRamo, nombre, fechaISO };
+      evaluaciones.push(nueva);
+      evaluaciones.sort((a, b) => new Date(a.fechaISO) - new Date(b.fechaISO));
+      localStorage.setItem('portal_evaluaciones', JSON.stringify(evaluaciones));
+
+      cerrarModal('modalEval');
+      document.getElementById('ev-nombre').value = '';
+      renderizarAgenda();
+      renderizarCalendario();
+    }
+
+    function eliminarEval(id) {
+      if (confirm("¿Eliminar esta evaluación?")) {
+        evaluaciones = evaluaciones.filter(e => e.id !== id);
+        localStorage.setItem('portal_evaluaciones', JSON.stringify(evaluaciones));
+        renderizarAgenda();
+        renderizarCalendario();
+      }
+    }
+
+    function renderizarAgenda() {
+      const cont = document.getElementById('agenda-lista-completa');
+      const quickCont = document.getElementById('quick-evals-list');
+      const hoy = new Date();
+      hoy.setHours(0,0,0,0);
+
+      const futuras = evaluaciones.filter(e => new Date(e.fechaISO + 'T12:00:00') >= hoy);
+
+      if (futuras.length === 0) {
+        cont.innerHTML = `<div style="text-align:center;padding:30px;color:var(--muted);">No hay evaluaciones próximas registradas.</div>`;
+        quickCont.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:12px;">Sin evaluaciones pendientes</div>`;
+        return;
+      }
+
+      const getBadgeDias = (fechaISO) => {
+        const f = new Date(fechaISO + 'T12:00:00');
+        const diff = Math.ceil((f - hoy) / (1000 * 60 * 60 * 24));
+        if (diff === 0) return `<span class="eval-badge" style="background:#fee2e2;color:#dc2626;"><i class="fa-solid fa-circle-exclamation"></i> ¡Hoy!</span>`;
+        if (diff === 1) return `<span class="eval-badge" style="background:#fef3c7;color:#d97706;"><i class="fa-solid fa-clock"></i> Mañana</span>`;
+        if (diff <= 7) return `<span class="eval-badge" style="background:#fef3c7;color:#d97706;"><i class="fa-regular fa-clock"></i> En ${diff} días</span>`;
+        return `<span class="eval-badge"><i class="fa-regular fa-calendar"></i> En ${diff} días</span>`;
+      };
+
+      cont.innerHTML = futuras.map(e => {
+        const info = RAMOS[e.idRamo] || { nombre: e.idRamo, color: '#64748b' };
+        const dObj = new Date(e.fechaISO + 'T12:00:00');
+        const fStr = `${dObj.getDate()} de ${MESES[dObj.getMonth()]} ${dObj.getFullYear()}`;
+        return `
+          <div class="eval-card" style="border-left-color: ${info.color}">
+            <div>
+              <div class="eval-title">${e.nombre}</div>
+              <div class="eval-ramo">${info.nombre}</div>
+              <div style="font-size:12px;color:var(--text);margin-top:4px;">${fStr}</div>
+              ${getBadgeDias(e.fechaISO)}
+            </div>
+            <button class="btn-del" onclick="eliminarEval('${e.id}')" title="Eliminar"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        `;
+      }).join('');
+
+      // Widget rápido (top 3)
+      quickCont.innerHTML = futuras.slice(0, 3).map(e => {
+        const info = RAMOS[e.idRamo] || { nombre: e.idRamo, color: '#64748b' };
+        const dObj = new Date(e.fechaISO + 'T12:00:00');
+        return `
+          <div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-size:12px;font-weight:700;">${e.nombre}</div>
+              <div style="font-size:10px;color:${info.color};font-weight:700;">${info.nombre}</div>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:var(--muted);">${dObj.getDate()}/${dObj.getMonth()+1}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ── CALENDARIO ── */
+    let fechaCal = new Date();
+
+    function renderizarCalendario() {
+      const mes = fechaCal.getMonth();
+      const anio = fechaCal.getFullYear();
+      document.getElementById('cal-titulo').innerText = `${MESES[mes]} ${anio}`;
+
+      const primerDia = new Date(anio, mes, 1).getDay();
+      const start = primerDia === 0 ? 6 : primerDia - 1;
+      const totalDias = new Date(anio, mes + 1, 0).getDate();
+
+      const cont = document.getElementById('cal-dias');
+      cont.innerHTML = '';
+
+      for (let i = 0; i < start; i++) {
+        cont.innerHTML += `<div class="cal-day empty"></div>`;
+      }
+
+      const hoyStr = `${new Date().getFullYear()}-${new Date().getMonth()}-${new Date().getDate()}`;
+
+      for (let d = 1; d <= totalDias; d++) {
+        const clave = `${anio}-${mes}-${d}`;
+        const isToday = clave === hoyStr;
+
+        // Buscar eventos en este día
+        const evs = evaluaciones.filter(e => {
+          const evD = new Date(e.fechaISO + 'T12:00:00');
+          return evD.getFullYear() === anio && evD.getMonth() === mes && evD.getDate() === d;
+        });
+
+        let dotsHTML = '';
+        let hasEvent = evs.length > 0;
+        if (hasEvent) {
+          dotsHTML = `<div class="cal-dots">${evs.slice(0, 3).map(e => `<div class="cal-dot" style="background:${(RAMOS[e.idRamo]||{}).color||'#185FA5'}"></div>`).join('')}</div>`;
+        }
+
+        cont.innerHTML += `
+          <div class="cal-day ${isToday ? 'today' : ''} ${hasEvent ? 'has-event' : ''}">
+            ${d}
+            ${dotsHTML}
+          </div>
+        `;
+      }
+    }
+
+    function cambiarMes(delta) {
+      fechaCal.setMonth(fechaCal.getMonth() + delta);
+      renderizarCalendario();
+    }
+
+    function filtrarRamo(idRamo) {
+      cambiarTab('agenda', document.querySelectorAll('.nav-btn')[2]);
+    }
+
+    function exportarDatos() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(evaluaciones, null, 2));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = "evaluaciones_ici.json";
+      a.click();
+    }
+
+    function importarDatos() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = event => {
+          try {
+            evaluaciones = JSON.parse(event.target.result);
+            localStorage.setItem('portal_evaluaciones', JSON.stringify(evaluaciones));
+            renderizarAgenda();
+            renderizarCalendario();
+            alert("¡Evaluaciones importadas con éxito!");
+          } catch(err) { alert("Archivo JSON no válido."); }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    /* ── MODAL HELPERS ── */
+    function abrirModalEval() { document.getElementById('modalEval').classList.add('open'); }
+    function cerrarModal(id) { document.getElementById(id).classList.remove('open'); }
+    function cerrarSiFuera(e, id) { if (e.target.id === id) cerrarModal(id); }
+
+    /* ── INICIALIZACIÓN ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Activar píldora de hoy en móvil
+      const pills = document.querySelectorAll('.day-pill');
+      if (pills[diaSeleccionado - 1]) pills[diaSeleccionado - 1].classList.add('active');
+
+      renderTimeline();
+      renderizarAgenda();
+      renderizarCalendario();
+      cargarMenuCasino();
+    });
+  </script>
+</body>
+</html>
