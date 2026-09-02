@@ -61,7 +61,7 @@ def construir() -> dict:
     dias.sort(key=lambda m: m.fecha)
     return {
         "generado": datetime.datetime.now(TZ if TZ else None).isoformat(timespec="seconds"),
-        "fuente": "https://dise.udec.cl/node/171",
+        "fuente": "https://dise.udec.cl/?q=node/171",
         "hoy": hoy.isoformat(),
         "total_dias": len(dias),
         "dias": [m.to_dict() for m in dias],

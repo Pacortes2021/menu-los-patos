@@ -2,9 +2,10 @@ name: Menu diario Los Patos
 
 on:
   schedule:
-    # GitHub usa hora UTC. Chile esta en UTC-4 (mayo-ago) o UTC-3 (sep-abr).
-    # 12:00 UTC = 08:00 Chile (invierno) / 09:00 Chile (verano).
-    - cron: "0 12 * * 1-5"
+    # GitHub usa hora UTC. Chile esta en UTC-4 (invierno) o UTC-3 (verano).
+    # Usamos minutos no en punto (ej: 11:35 UTC) para evitar la cola de espera de GitHub Actions en punto (:00).
+    # 11:35 UTC = 07:35 Chile (invierno) / 08:35 Chile (verano).
+    - cron: "35 11 * * 1-5"
   workflow_dispatch: {}   # permite ejecutarlo a mano desde la pestana Actions
 
 permissions:
@@ -14,9 +15,9 @@ jobs:
   menu:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 

@@ -17,10 +17,29 @@ from dataclasses import dataclass, asdict, field
 
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util import Retry
 
 URL = "https://dise.udec.cl/?q=node/171"
 HEADERS = {"User-Agent": "Mozilla/5.0 (menu-los-patos scraper)"}
-TIMEOUT = 20
+TIMEOUT = 25
+
+
+def _obtener_sesion() -> requests.Session:
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["POST", "GET"],
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    return session
+
+
+SESION = _obtener_sesion()
 
 DIAS_SEMANA = [
     "lunes", "martes", "miércoles", "jueves",
@@ -80,7 +99,7 @@ def fetch_dia(dia: int, mes: int, anio: int) -> MenuDia:
         dia_semana=DIAS_SEMANA[fecha.weekday()],
     )
 
-    resp = requests.post(
+    resp = SESION.post(
         URL,
         data={"dia": str(dia), "mes": str(mes), "Submit": "Ver Menú"},
         headers=HEADERS,

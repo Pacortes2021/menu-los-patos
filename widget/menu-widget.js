@@ -11,17 +11,28 @@ const CELESTE = new Color("#85B7EB");
 const BLANCO = new Color("#FFFFFF");
 const CLARO = new Color("#D9E6F5");
 
+function fechaHoyLocal() {
+  const ahora = new Date();
+  const y = ahora.getFullYear();
+  const m = String(ahora.getMonth() + 1).padStart(2, "0");
+  const d = String(ahora.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 async function cargar() {
-  const req = new Request(RAW_URL);
+  const url = `${RAW_URL}?t=${Date.now()}`;
+  const req = new Request(url);
   req.timeoutInterval = 15;
   return await req.loadJSON();
 }
 
 function menuDeHoy(data) {
-  let dia = data.dias.find((d) => d.fecha === data.hoy);
+  const hoy = fechaHoyLocal();
+  const dias = data.dias || [];
+  let dia = dias.find((d) => d.fecha === hoy);
   if (dia) return { dia, esHoy: true };
-  // Si hoy no hay (fin de semana), mostrar el proximo dia disponible.
-  const prox = data.dias.find((d) => d.fecha > data.hoy);
+  // Si hoy no hay (fin de semana o feriado), mostrar el proximo dia disponible.
+  const prox = dias.find((d) => d.fecha > hoy);
   return { dia: prox || null, esHoy: false };
 }
 
