@@ -17,6 +17,13 @@ import pathlib
 import sys
 import time
 import urllib.parse
+import datetime
+import json
+import os
+import pathlib
+import sys
+import time
+import urllib.parse
 import urllib.request
 
 try:
@@ -27,31 +34,11 @@ except Exception:
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 MENU_JSON = RAIZ / "data" / "menu.json"
-ESTADO_JSON = RAIZ / "data" / "estado.json"
 
 
 def hoy_chile() -> str:
     ahora = datetime.datetime.now(TZ) if TZ else datetime.datetime.now()
     return ahora.date().isoformat()
-
-
-def ya_notificado_hoy() -> bool:
-    if not ESTADO_JSON.exists():
-        return False
-    try:
-        data = json.loads(ESTADO_JSON.read_text(encoding="utf-8"))
-        return data.get("ultimo_envio") == hoy_chile()
-    except Exception:
-        return False
-
-
-def registrar_envio_exitoso() -> None:
-    ESTADO_JSON.parent.mkdir(parents=True, exist_ok=True)
-    ahora_str = datetime.datetime.now(TZ if TZ else None).isoformat(timespec="seconds")
-    ESTADO_JSON.write_text(
-        json.dumps({"ultimo_envio": hoy_chile(), "fecha_hora": ahora_str}, indent=2),
-        encoding="utf-8",
-    )
 
 
 def menu_de_hoy() -> dict | None:
@@ -118,20 +105,15 @@ def main() -> None:
         return
 
     hoy = hoy_chile()
-    if ya_notificado_hoy():
-        print(f"El menú de hoy ({hoy}) ya fue enviado exitosamente en una ejecución anterior. Omitiendo.")
-        return
-
     dia = menu_de_hoy()
     if not dia:
-        print(f"Hoy ({hoy}) aún no hay menú cargado o es fin de semana. No se envía.")
+        print(f"Hoy ({hoy}) no hay menú cargado o es fin de semana. No se envía.")
         return
 
     texto = formatear(dia)
     print("Mensaje a enviar:\n" + texto)
     if enviar(texto, phone, apikey):
-        registrar_envio_exitoso()
-        print(f"Notificación de hoy ({hoy}) registrada exitosamente.")
+        print(f"Notificación de hoy ({hoy}) enviada exitosamente.")
     else:
         print("No se pudo enviar la notificación tras todos los intentos.", file=sys.stderr)
         sys.exit(1)
