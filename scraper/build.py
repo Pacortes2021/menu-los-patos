@@ -49,22 +49,42 @@ def scrapear_mes(mes: int, anio: int) -> list[MenuDia]:
 
 def construir() -> dict:
     hoy = hoy_chile()
-    dias = scrapear_mes(hoy.month, hoy.year)
+
+    # Cargar dias previamente conocidos para no borrarlos si la DISE tiene un fallo temporal
+    dias_map: dict[str, dict] = {}
+    if SALIDA.exists():
+        try:
+            previo = json.loads(SALIDA.read_text(encoding="utf-8"))
+            for d in previo.get("dias", []):
+                if isinstance(d, dict) and "fecha" in d:
+                    dias_map[d["fecha"]] = d
+        except Exception:
+            pass
+
+    nuevos_dias = scrapear_mes(hoy.month, hoy.year)
 
     # Si faltan <=5 dias para fin de mes, sumar el mes siguiente.
     _, ultimo = calendar.monthrange(hoy.year, hoy.month)
     if ultimo - hoy.day <= 5:
         sig_mes = 1 if hoy.month == 12 else hoy.month + 1
         sig_anio = hoy.year + 1 if hoy.month == 12 else hoy.year
-        dias += scrapear_mes(sig_mes, sig_anio)
+        nuevos_dias += scrapear_mes(sig_mes, sig_anio)
 
-    dias.sort(key=lambda m: m.fecha)
+    # Incorporar los nuevos dias obtenidos del sitio
+    for m in nuevos_dias:
+        dias_map[m.fecha] = m.to_dict()
+
+    # Filtrar para mantener desde el inicio del mes actual en adelante
+    primer_dia_mes = f"{hoy.year:04d}-{hoy.month:02d}-01"
+    lista_dias = [d for d in dias_map.values() if d.get("fecha", "") >= primer_dia_mes]
+    lista_dias.sort(key=lambda m: m["fecha"])
+
     return {
         "generado": datetime.datetime.now(TZ if TZ else None).isoformat(timespec="seconds"),
         "fuente": "https://dise.udec.cl/?q=node/171",
         "hoy": hoy.isoformat(),
-        "total_dias": len(dias),
-        "dias": [m.to_dict() for m in dias],
+        "total_dias": len(lista_dias),
+        "dias": lista_dias,
     }
 
 

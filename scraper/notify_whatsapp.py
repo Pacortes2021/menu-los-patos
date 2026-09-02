@@ -15,6 +15,7 @@ import json
 import os
 import pathlib
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -26,11 +27,31 @@ except Exception:
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 MENU_JSON = RAIZ / "data" / "menu.json"
+ESTADO_JSON = RAIZ / "data" / "estado.json"
 
 
 def hoy_chile() -> str:
     ahora = datetime.datetime.now(TZ) if TZ else datetime.datetime.now()
     return ahora.date().isoformat()
+
+
+def ya_notificado_hoy() -> bool:
+    if not ESTADO_JSON.exists():
+        return False
+    try:
+        data = json.loads(ESTADO_JSON.read_text(encoding="utf-8"))
+        return data.get("ultimo_envio") == hoy_chile()
+    except Exception:
+        return False
+
+
+def registrar_envio_exitoso() -> None:
+    ESTADO_JSON.parent.mkdir(parents=True, exist_ok=True)
+    ahora_str = datetime.datetime.now(TZ if TZ else None).isoformat(timespec="seconds")
+    ESTADO_JSON.write_text(
+        json.dumps({"ultimo_envio": hoy_chile(), "fecha_hora": ahora_str}, indent=2),
+        encoding="utf-8",
+    )
 
 
 def menu_de_hoy() -> dict | None:
@@ -60,21 +81,33 @@ def formatear(dia: dict) -> str:
     return "\n".join(lineas)
 
 
-def enviar(texto: str, phone: str, apikey: str) -> None:
+def enviar(texto: str, phone: str, apikey: str) -> bool:
     params = urllib.parse.urlencode(
         {"phone": phone, "text": texto, "apikey": apikey}
     )
     url = f"https://api.callmebot.com/whatsapp.php?{params}"
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (menu-los-patos)"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            cuerpo = resp.read().decode("utf-8", "ignore")
-            print(f"CallMeBot (status {resp.status}): {cuerpo}")
-            if "error" in cuerpo.lower() or "invalid" in cuerpo.lower():
-                print("AVISO: CallMeBot devolvió un mensaje de error.", file=sys.stderr)
-    except Exception as e:
-        print(f"Error al conectar con CallMeBot: {e}", file=sys.stderr)
-        raise
+
+    max_intentos = 3
+    for intento in range(1, max_intentos + 1):
+        try:
+            print(f"Enviando WhatsApp vía CallMeBot (intento {intento}/{max_intentos})...")
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                cuerpo = resp.read().decode("utf-8", "ignore")
+                print(f"CallMeBot (status {resp.status}): {cuerpo}")
+                if "error" in cuerpo.lower() or "invalid" in cuerpo.lower():
+                    print("AVISO: CallMeBot devolvió error en el contenido.", file=sys.stderr)
+                else:
+                    return True
+        except Exception as e:
+            print(f"Error en intento {intento}: {e}", file=sys.stderr)
+
+        if intento < max_intentos:
+            espera = intento * 5
+            print(f"Esperando {espera} segundos antes de reintentar...")
+            time.sleep(espera)
+
+    return False
 
 
 def main() -> None:
@@ -84,15 +117,25 @@ def main() -> None:
         print("Sin CALLMEBOT_PHONE/CALLMEBOT_APIKEY: no se envia WhatsApp.")
         return
 
+    hoy = hoy_chile()
+    if ya_notificado_hoy():
+        print(f"El menú de hoy ({hoy}) ya fue enviado exitosamente en una ejecución anterior. Omitiendo.")
+        return
+
     dia = menu_de_hoy()
     if not dia:
-        print("Hoy no hay menu (fin de semana / feriado). No se envia.")
+        print(f"Hoy ({hoy}) aún no hay menú cargado o es fin de semana. No se envía.")
         return
 
     texto = formatear(dia)
-    print("Mensaje:\n" + texto)
-    enviar(texto, phone, apikey)
+    print("Mensaje a enviar:\n" + texto)
+    if enviar(texto, phone, apikey):
+        registrar_envio_exitoso()
+        print(f"Notificación de hoy ({hoy}) registrada exitosamente.")
+    else:
+        print("No se pudo enviar la notificación tras todos los intentos.", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
