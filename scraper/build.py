@@ -33,6 +33,45 @@ def hoy_chile() -> datetime.date:
     return ahora.date()
 
 
+def necesita_scraping(forzar: bool = False) -> bool:
+    """Verifica si es estrictamente necesario consultar la web de la DISE."""
+    if forzar:
+        return True
+    if not SALIDA.exists():
+        return True
+
+    hoy = hoy_chile()
+    hoy_iso = hoy.isoformat()
+
+    try:
+        data = json.loads(SALIDA.read_text(encoding="utf-8"))
+    except Exception:
+        return True
+
+    dias = data.get("dias", [])
+    if not dias:
+        return True
+
+    fechas_disponibles = {d.get("fecha") for d in dias if isinstance(d, dict)}
+
+    # 1. Si hoy es dia habil (lunes a viernes) y no esta en el archivo, necesitamos scrapear
+    es_dia_habil = hoy.weekday() < 5
+    if es_dia_habil and hoy_iso not in fechas_disponibles:
+        return True
+
+    # 2. Si quedan <=3 dias de mes y aun no tenemos el proximo mes cargado, intentamos traerlo
+    _, ultimo = calendar.monthrange(hoy.year, hoy.month)
+    if ultimo - hoy.day <= 3:
+        sig_mes = 1 if hoy.month == 12 else hoy.month + 1
+        sig_anio = hoy.year + 1 if hoy.month == 12 else hoy.year
+        prefijo_sig = f"{sig_anio:04d}-{sig_mes:02d}-"
+        tiene_sig_mes = any(f.startswith(prefijo_sig) for f in fechas_disponibles)
+        if not tiene_sig_mes:
+            return True
+
+    return False
+
+
 def scrapear_mes(mes: int, anio: int) -> list[MenuDia]:
     _, ultimo = calendar.monthrange(anio, mes)
     dias: list[MenuDia] = []
@@ -47,8 +86,14 @@ def scrapear_mes(mes: int, anio: int) -> list[MenuDia]:
     return dias
 
 
-def construir() -> dict:
+def construir(forzar: bool = False) -> dict | None:
     hoy = hoy_chile()
+
+    if not necesita_scraping(forzar=forzar):
+        print(f"Cache valido: el menu de hoy ({hoy.isoformat()}) y del mes ya esta guardado. Omitiendo scraping.")
+        return None
+
+    print(f"Iniciando scraping mensual para {hoy.strftime('%B %Y')}...")
 
     # Cargar dias previamente conocidos para no borrarlos si la DISE tiene un fallo temporal
     dias_map: dict[str, dict] = {}
@@ -89,10 +134,12 @@ def construir() -> dict:
 
 
 def main() -> None:
-    data = construir()
-    SALIDA.parent.mkdir(parents=True, exist_ok=True)
-    SALIDA.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"OK -> {SALIDA} ({data['total_dias']} dias con menu, hoy={data['hoy']})")
+    forzar = "--force" in sys.argv or "-f" in sys.argv
+    data = construir(forzar=forzar)
+    if data is not None:
+        SALIDA.parent.mkdir(parents=True, exist_ok=True)
+        SALIDA.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"OK -> {SALIDA} ({data['total_dias']} dias con menu, hoy={data['hoy']})")
 
 
 if __name__ == "__main__":
