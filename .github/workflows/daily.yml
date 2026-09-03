@@ -1,11 +1,15 @@
 name: Menu diario Los Patos
 
 on:
+  repository_dispatch:
+    # cron-job.org llama a la API de GitHub exactamente a las 08:00 AM Chile (12:00 UTC).
+    # Este trigger tiene prioridad alta y se ejecuta en segundos, sin el delay de schedule.
+    types: [menu-diario]
   schedule:
-    # Ejecucion unica diaria en la mañana (lunes a viernes).
-    # 12:00 UTC = 08:00 AM Chile (invierno UTC-4) / 09:00 AM Chile (verano UTC-3).
-    - cron: "0 12 * * 1-5"
-  workflow_dispatch: {}   # permite ejecutarlo a mano desde la pestana Actions
+    # Respaldo por si falla cron-job.org (puede demorar hasta 2h en GitHub, pero es seguro).
+    # 12:05 UTC = 08:05 AM Chile (invierno UTC-4).
+    - cron: "5 12 * * 1-5"
+  workflow_dispatch: {}   # ejecucion manual desde la pestana Actions
 
 permissions:
   contents: write
@@ -34,13 +38,13 @@ jobs:
           CALLMEBOT_APIKEY: ${{ secrets.CALLMEBOT_APIKEY }}
         run: python notify_whatsapp.py
 
-      - name: Guardar cambios en menu.json
+      - name: Guardar cambios en data/
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/menu.json
+          git add data/menu.json data/estado.json
           if git diff --staged --quiet; then
-            echo "Sin cambios en el menu."
+            echo "Sin cambios que guardar."
           else
             git commit -m "menu: actualizar $(date -u +%Y-%m-%d)"
             git pull --rebase origin main
