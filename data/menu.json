@@ -1,231 +1,39 @@
 {
-  "generado": "2026-09-30T14:57:53-03:00",
+  "generado": "2026-10-01T15:22:49-03:00",
   "fuente": "https://dise.udec.cl/?q=node/171",
-  "hoy": "2026-09-30",
+  "hoy": "2026-10-01",
   "total_dias": 21,
   "dias": [
     {
-      "fecha": "2026-09-01",
-      "dia_semana": "martes",
-      "ensalada": "Crema de verduras",
-      "alternativa_1": "Asado a la olla con papas fritas",
-      "alternativa_2": "Spaguetti a la parisien",
+      "fecha": "2026-10-01",
+      "dia_semana": "jueves",
+      "ensalada": "Lechuga/rabanitos",
+      "alternativa_1": "1/2 zapallito italiano relleno de verduras con pastelera de choclo",
+      "alternativa_2": "Merluza apanada con Arroz a la italiana",
       "postres": [
-        "Mote con huesillos",
-        "Flan de frutilla"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-02",
-      "dia_semana": "miércoles",
-      "ensalada": "Ensalada toscana",
-      "alternativa_1": "Porotos a lo pancho villa",
-      "alternativa_2": "Pescado a la chorrillana con Arroz verde",
-      "postres": [
-        "Pera",
+        "Plátano",
         "Helado"
       ],
       "hay_menu": true
     },
     {
-      "fecha": "2026-09-03",
-      "dia_semana": "jueves",
-      "ensalada": "Consome al huevo",
-      "alternativa_1": "Chuleta de cerdo asada con Charquican de verduras",
-      "alternativa_2": "Goulash de pavo con Quifaros al perejil",
-      "postres": [
-        "Brownie",
-        "Jalea con fruta"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-04",
+      "fecha": "2026-10-02",
       "dia_semana": "viernes",
-      "ensalada": "Ensalada surtida",
-      "alternativa_1": "Vienesas asadas con Arvejitas guisadas",
-      "alternativa_2": "Budin de atun con Puré mixto",
+      "ensalada": "Apio con choclo",
+      "alternativa_1": "Completo alemán con papas fritas acompañamiento",
+      "alternativa_2": "Chuleta de cerdo con espirales al huerto",
       "postres": [
-        "Tutti frutti",
-        "Natilla almendrada con coco"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-07",
-      "dia_semana": "lunes",
-      "ensalada": "Consome de pollo",
-      "alternativa_1": "Curry de garbanzos con Papas rústicas",
-      "alternativa_2": "Budin de acelga y choclo con Arroz a la italiana",
-      "postres": [
-        "Pure de manzana con chantilly",
-        "Helado"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-08",
-      "dia_semana": "martes",
-      "ensalada": "Sopa juliana",
-      "alternativa_1": "Chow main de pollo con Espirales en salsa",
-      "alternativa_2": "Papas rellenas",
-      "postres": [
-        "Arroz con leche con canela en polvo",
-        "Jalea con yogurt"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-09",
-      "dia_semana": "miércoles",
-      "ensalada": "Lechuga con zanahoria",
-      "alternativa_1": "Cerdo a la cazadora con Arroz árabe",
-      "alternativa_2": "Hamburguesa con Lentejas a la parmesana",
-      "postres": [
-        "Flan de chocolate con almendras",
-        "Helado"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-10",
-      "dia_semana": "jueves",
-      "ensalada": "Pebre",
-      "alternativa_1": "Empanada de horno / mini brocheta de cerdo",
-      "alternativa_2": "Pollo asado / 1/2 longaniza asada con Papas cocidas",
-      "postres": [
-        "Parajitos con merengue y mostacilla tricolor",
-        "Mote con huesillos"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-11",
-      "dia_semana": "viernes",
-      "ensalada": "Consome de vacuno",
-      "alternativa_1": "Merluza a la francesa con Arroz criollo",
-      "alternativa_2": "1/2 Zapallitos italiano relleno de verduras con Pastelera de choclo",
-      "postres": [
-        "Helado",
-        "Natilla pie limon con chocolate rallado"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-14",
-      "dia_semana": "lunes",
-      "ensalada": "Lechuga / tomate",
-      "alternativa_1": "Milanesa de vacuno con Quifaros en salsa",
-      "alternativa_2": "Vienesas con Garbanzos guisadas",
-      "postres": [
-        "Jalea marmol",
-        "Pera"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-15",
-      "dia_semana": "martes",
-      "ensalada": "Sopa de vacuno/chuchoca",
-      "alternativa_1": "Croqueta de jurel con Puré leonesa",
-      "alternativa_2": "Fritos de acelga y zanahorias con Arroz mediterraneo",
-      "postres": [
-        "Kiwi macerados con crema",
-        "Helado"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-16",
-      "dia_semana": "miércoles",
-      "ensalada": "Crema de champiñones",
-      "alternativa_1": "Pechuga de pollo escabechada con Pastas a la birmana",
-      "alternativa_2": "Huevos a la mexicana con Puré de arvejitas",
-      "postres": [
-        "Semola con leche y caramelo",
-        "Jalea frambuesa con chantilly"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-17",
-      "dia_semana": "jueves",
-      "ensalada": "Consome al huevo",
-      "alternativa_1": "Juliana de cerdo con Arroz curry",
-      "alternativa_2": "Budin de verduras proteina con Papas dado",
-      "postres": [
-        "Manzana",
-        "Budin diplomatico con salsa manjar"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-21",
-      "dia_semana": "lunes",
-      "ensalada": "Lechuga/ coliflor",
-      "alternativa_1": "Merluza apanada con Arroz chaufan",
-      "alternativa_2": "Garbanzos a la madrileña",
-      "postres": [
-        "Helado",
+        "Natilla suspiro limeño con merengue",
         "Manzana"
       ],
       "hay_menu": true
     },
     {
-      "fecha": "2026-09-22",
-      "dia_semana": "martes",
-      "ensalada": "Crema de esparragos",
-      "alternativa_1": "Lasaña de pollo al pesto",
-      "alternativa_2": "Tomatican de vacuno con Papas mayo",
-      "postres": [
-        "Jalea de limon con leche condensada",
-        "Compota de mixta"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-23",
-      "dia_semana": "miércoles",
-      "ensalada": "Apio con choclo",
-      "alternativa_1": "Tortilla de acelga y jamon con Arroz primavera",
-      "alternativa_2": "Hamburguesa napolitana con Puré de arvejitas",
-      "postres": [
-        "Semola con salsa mermelada",
-        "Helado"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-24",
-      "dia_semana": "jueves",
-      "ensalada": "Repollo blanco/cilantro",
-      "alternativa_1": "Pastas bontoux",
-      "alternativa_2": "Pastel de papas",
-      "postres": [
-        "Platano",
-        "Pie de limon"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-25",
-      "dia_semana": "viernes",
-      "ensalada": "Pepino/ aceituna",
-      "alternativa_1": "Sand. Hamburguesa queso tomate con papas fritas",
-      "alternativa_2": "Lomo de cerdo asado con salsa a la mostaza con Arroz zanahoria",
-      "postres": [
-        "Merengon de platano con mani",
-        "Naranja"
-      ],
-      "hay_menu": true
-    },
-    {
-      "fecha": "2026-09-28",
+      "fecha": "2026-10-05",
       "dia_semana": "lunes",
       "ensalada": "Mix de repollo",
-      "alternativa_1": "Strogonoff de vacuno con Corbatitas al perejil",
-      "alternativa_2": "Vienesas / huevo frito con Lentejas con verduras",
+      "alternativa_1": "Souffle de atun con arroz primavera",
+      "alternativa_2": "Huevos a la mexicana con puré de garbanzos",
       "postres": [
         "Jalea bicolor con yogurt",
         "Pera"
@@ -233,26 +41,218 @@
       "hay_menu": true
     },
     {
-      "fecha": "2026-09-29",
+      "fecha": "2026-10-06",
       "dia_semana": "martes",
-      "ensalada": "Crema de choclo",
-      "alternativa_1": "Souffle de atun con Puré de papas",
-      "alternativa_2": "Chapsui de pollo con Arroz verde",
+      "ensalada": "Consomé al huevo",
+      "alternativa_1": "Lasaña de pollo al pesto",
+      "alternativa_2": "Asado a la olla con puré leonesa",
       "postres": [
-        "Compota de manzana",
-        "Queque marmol"
+        "Brownie",
+        "Helado"
       ],
       "hay_menu": true
     },
     {
-      "fecha": "2026-09-30",
+      "fecha": "2026-10-07",
       "dia_semana": "miércoles",
-      "ensalada": "Tomate/ lechuga",
-      "alternativa_1": "Salsa bolognesa con Spaguetti",
-      "alternativa_2": "Longaniza con Porotos tipo granados",
+      "ensalada": "Tomate a la chilena",
+      "alternativa_1": "Fritos de coliflor y zanahoria con quifaros en salsa",
+      "alternativa_2": "Longaniza con porotos tipo granados",
       "postres": [
-        "Leche asada",
+        "Compota mixta",
         "Jalea con semola"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-08",
+      "dia_semana": "jueves",
+      "ensalada": "Zanahoria /Lechuga",
+      "alternativa_1": "Asado alemán con arroz criollo",
+      "alternativa_2": "Juliana de cerdo con papas rusticas",
+      "postres": [
+        "Tutti frutti",
+        "Leche asada"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-09",
+      "dia_semana": "viernes",
+      "ensalada": "Ensalada toscana",
+      "alternativa_1": "Hamburguesa de vacuno con Lentejas guisadas",
+      "alternativa_2": "Pechuga de pollo al curry con fricasse de verduras",
+      "postres": [
+        "Merengón de plátano y maní",
+        "Natilla de chocolate y crema chantilly"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-13",
+      "dia_semana": "martes",
+      "ensalada": "Crema de choclo",
+      "alternativa_1": "Salsa bolognesa con spaguetti al aglio",
+      "alternativa_2": "Budin de verduras con Arroz al curry",
+      "postres": [
+        "Helado",
+        "Manzana"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-14",
+      "dia_semana": "miércoles",
+      "ensalada": "Tomate c/ cilantro",
+      "alternativa_1": "Huevo frito/ vienesa asada con Arvejitas guisadas",
+      "alternativa_2": "Merluza escabechada con papas fritas",
+      "postres": [
+        "Compota de ciruela y manzana",
+        "Queque mármol con azúcar flor"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-15",
+      "dia_semana": "jueves",
+      "ensalada": "Lechuga c/poroto verde",
+      "alternativa_1": "Lomo de cerdo con miel y tomillo con Charquicán de verduras",
+      "alternativa_2": "Pollo al jugo con Espirales al morron rojo",
+      "postres": [
+        "Plátano",
+        "Bicolor jalea maicena"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-16",
+      "dia_semana": "viernes",
+      "ensalada": "Pepino c/ aceitunas",
+      "alternativa_1": "Curry de garbanzos con Papas leonesa",
+      "alternativa_2": "Croqueta de jurel al horno con Arroz primavera",
+      "postres": [
+        "Macedonia",
+        "Sémola con leche y salsa frambuesa"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-19",
+      "dia_semana": "lunes",
+      "ensalada": "Zapallito italiano c/ choclo",
+      "alternativa_1": "Strogonoff de vacuno con spaguetti a la italiana",
+      "alternativa_2": "Vienesas con Lentejas a la parmesana",
+      "postres": [
+        "Jalea mármol",
+        "Naranja"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-20",
+      "dia_semana": "martes",
+      "ensalada": "Consomé de vacuno",
+      "alternativa_1": "Pescado a la chorrillana con Arroz verde",
+      "alternativa_2": "Pechuga de pollo a la mostaza con Panache de verduras",
+      "postres": [
+        "Mote con huesillos",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-21",
+      "dia_semana": "miércoles",
+      "ensalada": "Repollo mixto",
+      "alternativa_1": "Goulash de cerdo con corbatitas al perejil",
+      "alternativa_2": "Mongoliana de vacuno con Puré mixto",
+      "postres": [
+        "Pie de frambuesa",
+        "Manzana"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-22",
+      "dia_semana": "jueves",
+      "ensalada": "Ensalada surtida",
+      "alternativa_1": "Soufflé de acelga y choclo con arroz al morron",
+      "alternativa_2": "Porotos Pancho Villa",
+      "postres": [
+        "Porridge con canela molida",
+        "Jalea con leche condensada"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-23",
+      "dia_semana": "viernes",
+      "ensalada": "Ensalada de la huerta",
+      "alternativa_1": "Sándwich Hamburguesa /lechuga/tomate con porcion de papas fritas",
+      "alternativa_2": "Milanesa de vacuno con Spaguettii al pesto",
+      "postres": [
+        "Flan de frutilla c/ merengue",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-26",
+      "dia_semana": "lunes",
+      "ensalada": "Tomate c/ acelga",
+      "alternativa_1": "Chow main de pollo con Arroz a la griega",
+      "alternativa_2": "Hamburguesa napolitana con Puré de arvejas",
+      "postres": [
+        "Helado",
+        "Manzana"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-27",
+      "dia_semana": "martes",
+      "ensalada": "Apio c/ cilantro",
+      "alternativa_1": "Pavo a la jardinera con espirales al aglio",
+      "alternativa_2": "Pastel de choclo",
+      "postres": [
+        "Compota de huesillos",
+        "Queque de naranja"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-28",
+      "dia_semana": "miércoles",
+      "ensalada": "Lechuga/brocol",
+      "alternativa_1": "Budin de pescado con arroz arabe",
+      "alternativa_2": "Huevo frito/ vienesa con guiso de lentejas",
+      "postres": [
+        "Flan de chocolate c/ nueces",
+        "Jalea mosaico"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-29",
+      "dia_semana": "jueves",
+      "ensalada": "Consomé de pollo",
+      "alternativa_1": "Papas rellenas",
+      "alternativa_2": "Fritos de acelga y zanahoria con pastas a la birmana",
+      "postres": [
+        "Puré de manzana con crema chantilly",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-10-30",
+      "dia_semana": "viernes",
+      "ensalada": "Ensalada surtida",
+      "alternativa_1": "Longaniza con porotos con riendas",
+      "alternativa_2": "Chapsui de pollo con Arroz chaufan",
+      "postres": [
+        "Carolin cacao con coco",
+        "Naranja"
       ],
       "hay_menu": true
     }
