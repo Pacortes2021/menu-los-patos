@@ -1,8 +1,8 @@
 {
-  "generado": "2026-10-29T15:23:55-03:00",
+  "generado": "2026-10-30T14:57:33-03:00",
   "fuente": "https://dise.udec.cl/?q=node/171",
-  "hoy": "2026-10-29",
-  "total_dias": 21,
+  "hoy": "2026-10-30",
+  "total_dias": 42,
   "dias": [
     {
       "fecha": "2026-10-01",
@@ -252,6 +252,258 @@
       "alternativa_2": "Chapsui de pollo con Arroz chaufan",
       "postres": [
         "Carolin cacao con coco",
+        "Naranja"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-02",
+      "dia_semana": "lunes",
+      "ensalada": "Lechuga/brocoli",
+      "alternativa_1": "Asado de vacuno a la olla con Quifaros al aglio",
+      "alternativa_2": "Vienesas con Arvejas guisadas",
+      "postres": [
+        "Jalea limón con yogurt",
+        "Pera"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-03",
+      "dia_semana": "martes",
+      "ensalada": "Mix Repollo",
+      "alternativa_1": "Sandwich ave/lechuga/tomate/Mayo con Porcion papas fritas",
+      "alternativa_2": "Juliana de cerdo con Arroz curry",
+      "postres": [
+        "Kiwis macerados con crema",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-04",
+      "dia_semana": "miércoles",
+      "ensalada": "Lechuga/choclo",
+      "alternativa_1": "Merluza apanada con Papas mayo",
+      "alternativa_2": "Pavo al jugo con Espirales al pesto",
+      "postres": [
+        "Sémola con leche y caramelo",
+        "Jalea frambuesa con merengue"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-05",
+      "dia_semana": "jueves",
+      "ensalada": "Consomé de vacuno",
+      "alternativa_1": "1/2 zapallitos italiano relleno con verduras con Arroz húngaro",
+      "alternativa_2": "Hamburguesa de vacuno napolitana con Puré de garbanzos",
+      "postres": [
+        "Plátano",
+        "Budín diplomático con manjar y coco rallado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-06",
+      "dia_semana": "viernes",
+      "ensalada": "Zanahoria /coliflor",
+      "alternativa_1": "Longaniza con Porotos tipo granados",
+      "alternativa_2": "Soufflé de atún con Puré Leonesa",
+      "postres": [
+        "Tutti fruti",
+        "Panacota de duraznos con mermelada de durazno"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-09",
+      "dia_semana": "lunes",
+      "ensalada": "Pepino con choclo",
+      "alternativa_1": "Merluza apanada con Arroz primavera",
+      "alternativa_2": "Vienesas con Lentejas guisadas",
+      "postres": [
+        "Helado",
+        "Naranja"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-10",
+      "dia_semana": "martes",
+      "ensalada": "Crema de espárragos",
+      "alternativa_1": "Lasaña de pollo pesto",
+      "alternativa_2": "Macluwa de cerdo",
+      "postres": [
+        "Puré de Pera con crema pastelera",
+        "Pie de limón"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-11",
+      "dia_semana": "miércoles",
+      "ensalada": "Lechuga con tomate",
+      "alternativa_1": "Budín de verduras con Papas rústicas",
+      "alternativa_2": "Huevos fritos a la mexicana con Puré de Arvejas",
+      "postres": [
+        "Porridge con mermelada",
+        "Jalea mosaico"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-12",
+      "dia_semana": "jueves",
+      "ensalada": "Repollo blanco con cilantro",
+      "alternativa_1": "Chuleta de cerdo en salsa mostaza con Arroz criollo",
+      "alternativa_2": "Croqueta de pescado en salsa puerro con Puré a la piedra",
+      "postres": [
+        "Plátano",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-13",
+      "dia_semana": "viernes",
+      "ensalada": "Ensalada surtida",
+      "alternativa_1": "Completo italiano con Papas fritas",
+      "alternativa_2": "Croqueta de carne con queso mozarella con Espirales en salsa",
+      "postres": [
+        "Macedonia",
+        "Flan de vainilla c/ssa chocolate"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-16",
+      "dia_semana": "lunes",
+      "ensalada": "Lechuga /poroto verde",
+      "alternativa_1": "Strogonoff de vacuno con Corbatitas a la zanahoria",
+      "alternativa_2": "Hamburguesa de pollo escabechada con Puré de garbanzos",
+      "postres": [
+        "Jalea bicolor con leche condensada",
+        "Pera"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-17",
+      "dia_semana": "martes",
+      "ensalada": "Sopa de pollo /sémola",
+      "alternativa_1": "Pescado escabechado con Papas dado",
+      "alternativa_2": "Tortilla acelga/zanahoria con Arroz árabe",
+      "postres": [
+        "Compota de manzana",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-18",
+      "dia_semana": "miércoles",
+      "ensalada": "Tomate a la chilena",
+      "alternativa_1": "Chapsui de pollo con Pastelera de choclo",
+      "alternativa_2": "Salsa boloñesa con Spaghetti al perejil",
+      "postres": [
+        "Leche asada",
+        "Jalea con sémola y crema pastelera"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-19",
+      "dia_semana": "jueves",
+      "ensalada": "Ensalada de col con mojo",
+      "alternativa_1": "Ropa vieja con Arroz y frijoles negros",
+      "alternativa_2": "Lechon asado con Puré de zapallo",
+      "postres": [
+        "Natilla de chocolate casera c/ crema y fresas",
+        "Tortica de morón"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-20",
+      "dia_semana": "viernes",
+      "ensalada": "Ensalada toscana",
+      "alternativa_1": "Vienesas salteadas con Guiso de lentejas y verduras - papa cubo",
+      "alternativa_2": "Budin de pescado con Arroz a la italiana",
+      "postres": [
+        "Merengon de plátano con maní",
+        "Flan de frutilla con coco rallado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-23",
+      "dia_semana": "lunes",
+      "ensalada": "Repollo blanco/ Zanahoria",
+      "alternativa_1": "Goulash vacuno con Puré de papas",
+      "alternativa_2": "Longaniza con Porotos con mazamorra",
+      "postres": [
+        "Helado",
+        "Manzana"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-24",
+      "dia_semana": "martes",
+      "ensalada": "Crema de champiñones",
+      "alternativa_1": "Budín de zapallitos con Papas al gratin",
+      "alternativa_2": "Chuleta de cerdo cazadora con Espirales del huerto",
+      "postres": [
+        "Leche nevada",
+        "Jalea mosaico"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-25",
+      "dia_semana": "miércoles",
+      "ensalada": "Apio c/choclo",
+      "alternativa_1": "Hamburgesa vacuno con Arvejitas guisadas",
+      "alternativa_2": "Merluza a la vizcaina con Arroz sol",
+      "postres": [
+        "Compota de ciruela y manzana",
+        "Queque mármol con azúcar flor"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-26",
+      "dia_semana": "jueves",
+      "ensalada": "Mix repollo cilantro",
+      "alternativa_1": "Lomo de cerdo con miel y tomillo con Charquicán de verduras",
+      "alternativa_2": "Asado alemán con Corbatitas perejil",
+      "postres": [
+        "Plátano",
+        "Arroz con leche con chocolate rallado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-27",
+      "dia_semana": "viernes",
+      "ensalada": "Lechuga/rabanitos",
+      "alternativa_1": "Sánd.Hamburguesa /queso/tomate con Porción papas fritas",
+      "alternativa_2": "Pollo Trutro al jugo con Arroz primavera",
+      "postres": [
+        "Natilla suspiro limeño con salsa chocolate",
+        "Helado"
+      ],
+      "hay_menu": true
+    },
+    {
+      "fecha": "2026-11-30",
+      "dia_semana": "lunes",
+      "ensalada": "Lechuga/ coliflor",
+      "alternativa_1": "Spaguetti a la parisien",
+      "alternativa_2": "Huevo frito/vienesa con Lentejas a la parmesana",
+      "postres": [
+        "Jalea de piña c/ leche condensada",
         "Naranja"
       ],
       "hay_menu": true
